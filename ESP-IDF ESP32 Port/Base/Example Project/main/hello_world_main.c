@@ -22,7 +22,8 @@ void app_main(void)
         xpt2046_read(&x,&y,&state);
         if(state)
         {
-            printf("x=%d,y=%d",x,y);
+            printf("x=%d,y=%d\n",x,y);
         }
+        vTaskDelay(pdMS_TO_TICKS(10));
     }
 }
