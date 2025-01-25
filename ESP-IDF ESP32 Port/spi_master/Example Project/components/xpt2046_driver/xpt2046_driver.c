@@ -31,7 +31,7 @@
 //static data
 typedef struct static_data_t
 {
-    spi_device_handle_t device;
+    spi_device_handle_t spi;
 }static_data_t;
 static static_data_t static_data={0};
 
@@ -74,7 +74,7 @@ static void swap(uint8_t cmd,uint16_t*data)
     transaction.length=8*3;
     transaction.tx_buffer=&cmd;
     transaction.rx_buffer=&datai;
-    spi_device_transmit(static_data.device,&transaction);
+    spi_device_transmit(static_data.spi,&transaction);
     *data=(datai[1]<<8)|datai[2];
     return;
 }
@@ -88,7 +88,7 @@ static void init_spi()
     config.spics_io_num=CS;
     config.queue_size=1;
     config.clock_speed_hz=RATE;
-    spi_bus_add_device(SPI,&config,&static_data.device);
+    spi_bus_add_device(SPI,&config,&static_data.spi);
     return;
 }
 
