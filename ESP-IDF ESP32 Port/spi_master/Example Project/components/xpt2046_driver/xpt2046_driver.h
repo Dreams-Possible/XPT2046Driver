@@ -8,9 +8,9 @@
 #include<stdint.h>
 #include"driver/spi_master.h"
 
-//xpt2046 init all
+//xpt2046 init
 void xpt2046_init();
-//read touch
+//xpt2046 read
 void xpt2046_read(uint16_t*x,uint16_t*y,uint8_t*state);
 
 #endif//#ifndef XPT2046_DRIVER_H

@@ -39,9 +39,9 @@ static uint8_t check();
 static void raw(uint16_t*x,uint16_t*y);
 //convert to position
 static void convert(uint16_t*x,uint16_t*y);
-//xpt2046 init all
+//xpt2046 init
 void xpt2046_init();
-//read touch
+//xpt2046 read
 void xpt2046_read(uint16_t*x,uint16_t*y,uint8_t*state);
 
 //send a bit
@@ -70,7 +70,7 @@ static void init_spi()
     return;
 }
 
-//xpt2046 init all
+//xpt2046 init
 void xpt2046_init()
 {
     init_spi();
@@ -135,7 +135,7 @@ static void convert(uint16_t*x,uint16_t*y)
     return;
 }
 
-//read touch
+//xpt2046 read
 void xpt2046_read(uint16_t*x,uint16_t*y,uint8_t*state)
 {
     uint16_t xi=0;
