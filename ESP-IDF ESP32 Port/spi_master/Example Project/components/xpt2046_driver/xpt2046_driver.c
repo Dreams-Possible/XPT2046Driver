@@ -9,6 +9,9 @@
 #define VER_OFF 150//convert to position:y edge error
 #define HOR_FAC 1600//convert to position:x conversion coefficient
 #define VER_FAC 1800//convert to position:y conversion coefficient
+#define SPI SPI2_HOST
+#define RATE 4*1000*1000
+#define CS 9
 
 //example config for specific oem touch
 // //config
@@ -25,10 +28,17 @@
 #define Z1 0Xb0
 #define Z2 0Xc0
 
-//send a bit
-static void send(uint8_t send);
-//receive two bits
-static void receive(uint16_t*receive);
+//static data
+typedef struct static_data_t
+{
+    spi_device_handle_t spi;
+}static_data_t;
+static static_data_t static_data={0};
+
+// //send a bit
+// static void send(uint8_t send);
+// //receive two bits
+// static void receive(uint16_t*receive);
 //swap 3 bits
 static void swap(uint8_t cmd,uint16_t*data);
 //init spi
@@ -44,29 +54,41 @@ void xpt2046_init();
 //xpt2046 read
 uint8_t xpt2046_read(uint16_t*x,uint16_t*y);
 
-//send a bit
-static void send(uint8_t send)
-{
-    return;
-}
+// //send a bit
+// static void send(uint8_t send)
+// {
+//     return;
+// }
 
-//receive two bits
-static void receive(uint16_t*receive)
-{
-    return;
-}
+// //receive two bits
+// static void receive(uint16_t*receive)
+// {
+//     return;
+// }
 
 //swap 3 bits
 static void swap(uint8_t cmd,uint16_t*data)
 {
-    send(cmd);
-    receive(data);
+    uint8_t datai[3]={0};
+    spi_transaction_t transaction={0};
+    transaction.length=8*3;
+    transaction.tx_buffer=&cmd;
+    transaction.rx_buffer=&datai;
+    spi_device_transmit(static_data.spi,&transaction);
+    *data=(datai[1]<<8)|datai[2];
     return;
 }
 
 //init spi
 static void init_spi()
 {
+    //add spi device
+    spi_device_interface_config_t config={0};
+    config.mode=0;
+    config.spics_io_num=CS;
+    config.queue_size=1;
+    config.clock_speed_hz=RATE;
+    spi_bus_add_device(SPI,&config,&static_data.spi);
     return;
 }
 

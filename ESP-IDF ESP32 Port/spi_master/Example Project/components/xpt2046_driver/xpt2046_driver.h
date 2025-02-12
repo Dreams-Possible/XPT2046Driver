@@ -6,6 +6,7 @@
 //include
 #include<stdio.h>
 #include<stdint.h>
+#include"driver/spi_master.h"
 
 //xpt2046 init
 void xpt2046_init();
