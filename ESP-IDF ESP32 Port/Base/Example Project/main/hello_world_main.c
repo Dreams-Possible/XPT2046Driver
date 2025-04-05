@@ -15,12 +15,10 @@ void app_main(void)
     //simple test
     uint16_t x=0;
     uint16_t y=0;
-    uint8_t state=0;
     while(1)
     {
         //read touch
-        xpt2046_read(&x,&y,&state);
-        if(state)
+        if(xpt2046_read(&x,&y))
         {
             printf("x=%d,y=%d\n",x,y);
         }
